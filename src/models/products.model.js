@@ -10,7 +10,8 @@ const findAll = async () => {
 
 const findById = async (id) => {
   const [result] = await connection.execute(
-    'SELECT * FROM products WHERE id = ?', [id]
+    'SELECT * FROM products WHERE id = ?',
+    [id],
   );
   return camelize(result);
 };
