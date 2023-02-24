@@ -3,7 +3,7 @@ const validate = require('./validation/inputValidations');
 
 const findAll = async () => {
   const products = await productsModel.findAll();
-  return products;
+  return { type: null, message: products };
 };
 
 const findById = async (id) => {
