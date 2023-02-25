@@ -8,11 +8,12 @@ const findAll = async () => {
 
 const findById = async (id) => {
   const error = validate.validateProductId(id);
-  if (error) return error;
+  if (error.type) return error;
 
   const product = await productsModel.findById(id);
-  if (product) return { type: null, message: product };
-  
+
+  if (product[0]) return { type: null, message: product[0] };
+
   return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 };
 
