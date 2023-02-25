@@ -8,8 +8,9 @@ const findAll = async (_req, res) => {
 };
 
 const findById = async (req, res) => {
-  const id = req.params;
-  const { type, message } = await productsService.findById(id);
+  const { id } = req.params;
+  const productId = Number(id);
+  const { type, message } = await productsService.findById(productId);
   if (type) return res.status(mapStatusError(type)).json(message);
   return res.status(sucessStatus).json(message);
 };
