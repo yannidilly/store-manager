@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const connection = require('../../../src/models/connection');
 const productsModel = require('../../../src/models/products.model');
 
-const { allProducts } = require('./mocks/products.model.mock');
+const { allProducts, productId1 } = require('./mocks/products.model.mock');
 
 describe('Realiza testes nas funções do produto da camada model', () => {
   test('Testa se função findAll retorna lista com todos os produtos', async () => {
@@ -15,7 +15,11 @@ describe('Realiza testes nas funções do produto da camada model', () => {
 
   });
 
-  test('Testa se a função findById retorna o objeto com as informações do produto com o id passado', () => {
+  test('Testa se a função findById retorna o objeto com as informações do produto com o id passado', async () => {
+    sinon.stub(connection, 'execute').resolves(productId1);
+
+    const result = await productsModel.findById(1);
+    expect(result).to.be.deep.equal(productId1);
 
   });
 });
