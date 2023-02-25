@@ -7,7 +7,7 @@ const findAll = async () => {
 };
 
 const findById = async (id) => {
-  const error = validate.validateId(id);
+  const error = validate.validateProductId(id);
   if (error) return error;
 
   const product = await productsModel.findById(id);
