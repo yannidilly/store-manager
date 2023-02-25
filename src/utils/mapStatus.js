@@ -1,6 +1,7 @@
 const sucessStatus = 200;
 
 const errorStatusMap = {
+  INVALID_VALUE: 400,
   PRODUCT_NOT_FOUND: 404,
 };
 
