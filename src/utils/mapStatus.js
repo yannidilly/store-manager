@@ -1,5 +1,7 @@
-const sucessStatus = 200;
-const successfullCreationStatus = 201;
+const sucessStatus = {
+  sucess: 200,
+  created: 201,
+};
 
 const errorStatusMap = {
   INVALID_VALUE: 400,
@@ -15,6 +17,5 @@ const mapStatusError = (type) => {
 
 module.exports = {
   sucessStatus,
-  successfullCreationStatus,
   mapStatusError,
 };

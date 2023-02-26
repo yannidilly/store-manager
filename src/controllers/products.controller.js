@@ -1,9 +1,9 @@
 const productsService = require('../services/products.service');
-const { sucessStatus, successfullCreationStatus, mapStatusError } = require('../utils/mapStatus');
+const { sucessStatus, mapStatusError } = require('../utils/mapStatus');
 
 const findAll = async (_req, res) => {
   const { message } = await productsService.findAll();
-  return res.status(sucessStatus).json(message);
+  return res.status(sucessStatus.sucess).json(message);
 };
 
 const findById = async (req, res) => {
@@ -11,13 +11,13 @@ const findById = async (req, res) => {
   const productId = Number(id);
   const { type, message } = await productsService.findById(productId);
   if (type) return res.status(mapStatusError(type)).json({ message });
-  return res.status(sucessStatus).json(message);
+  return res.status(sucessStatus.sucess).json(message);
 };
 
 const createProduct = async (req, res) => {
   const { type, message } = await productsService.createProduct(req.body);
   if (type) return res.status(mapStatusError(type)).json({ message });
-  return res.status(successfullCreationStatus).json(message);
+  return res.status(sucessStatus.created).json(message);
 };
 
 module.exports = {
