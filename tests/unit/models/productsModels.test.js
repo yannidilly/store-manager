@@ -13,7 +13,7 @@ describe('Realiza testes nas funções do produto da camada model', () => {
   })
 
   it('Testa se função findAll retorna lista com todos os produtos', async () => {
-    sinon.stub(connection, 'execute').resolves(allProducts);
+    sinon.stub(connection, 'execute').resolves([allProducts]);
 
     const result = await productsModel.findAll();
     expect(result).to.be.deep.equal(allProducts);
@@ -21,7 +21,7 @@ describe('Realiza testes nas funções do produto da camada model', () => {
   });
 
   it('Testa se a função findById retorna o objeto com as informações do produto com o id passado', async () => {
-    sinon.stub(connection, 'execute').resolves(productId1);
+    sinon.stub(connection, 'execute').resolves([productId1]);
 
     const result = await productsModel.findById(1);
     expect(result).to.be.deep.equal(productId1);
