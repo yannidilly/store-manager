@@ -28,4 +28,24 @@ describe('Realiza testes nas funções do produto da camada service', () => {
     expect(result.type).to.be.deep.equal(null);
     expect(result.message).to.be.deep.equal(productId1);
   });
+
+  it('Testa se a função findById retorna um erro quando o id passado não está com o formato correto', async () => {
+    sinon.stub(connection, 'execute').resolves([[productId1]]);
+
+    let result = await productsServices.findById('id string');
+    expect(result.type).to.be.deep.equal('INVALID_VALUE');
+    expect(result.message).to.be.deep.equal('"id" must to be a number');
+
+    result = await productsServices.findById(1.5);
+    expect(result.type).to.be.deep.equal('INVALID_VALUE');
+    expect(result.message).to.be.deep.equal('"id" must to be a number');
+
+    result = await productsServices.findById(0);
+    expect(result.type).to.be.deep.equal('INVALID_VALUE');
+    expect(result.message).to.be.deep.equal('"id" must to be a number');
+
+    result = await productsServices.findById();
+    expect(result.type).to.be.deep.equal('INVALID_VALUE');
+    expect(result.message).to.be.deep.equal('"id" must to be a number');
+  });
 });
