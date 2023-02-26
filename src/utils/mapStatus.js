@@ -8,6 +8,7 @@ const errorStatusMap = {
   PRODUCT_NOT_FOUND: 404,
   NAME_IS_REQUIRED: 400,
   NAME_LENGTH_ERROR: 422,
+  QUANTITY_MIN_ERROR: 422,
 };
 
 const mapStatusError = (type) => {
