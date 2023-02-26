@@ -18,6 +18,8 @@ const findById = async (id) => {
 };
 
 const createProduct = async ({ name }) => {
+  const error = validate.validateNewProduct({ name });
+  if (error.type) return error;
   const newProduct = await productsModel.createProduct({ name });
   return { type: null, message: newProduct };
 };
