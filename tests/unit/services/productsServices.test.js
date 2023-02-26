@@ -7,6 +7,11 @@ const productsModel = require('../../../src/models/products.model');
 const { allProducts, productId1 } = require('../mocks/products');
 
 describe('Realiza testes nas funções do produto da camada service', () => {
+
+  afterEach(() => {
+    sinon.restore();
+  })
+
   it('Testa se função findAll retorna lista com todos os produtos', async () => {
     sinon.stub(connection, 'execute').resolves(allProducts);
 
