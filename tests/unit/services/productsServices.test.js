@@ -48,4 +48,13 @@ describe('Realiza testes nas funções do produto da camada service', () => {
     expect(result.type).to.be.deep.equal('INVALID_VALUE');
     expect(result.message).to.be.deep.equal('"id" must to be a number');
   });
+
+  it('Testa se a função findById retorna um erro quando o não existe produto com aquele id', async () => {
+    sinon.stub(productsModel, 'findById').resolves([]);
+
+    const result = await productsServices.findById(99);
+
+    expect(result.type).to.be.deep.equal('PRODUCT_NOT_FOUND');
+    expect(result.message).to.be.deep.equal('Product not found');
+  });
 });
