@@ -16,6 +16,10 @@ describe('Realiza testes nas funções do produto da camada service', () => {
   });
 
   test('Testa se a função findById retorna o objeto com as informações do produto com o id passado', async () => {
-    
+    sinon.stub(connection, 'execute').resolves(productId1);
+
+    const result = await productsModel.findById(1);
+    expect(result.type).to.be.deep.equal(null);
+    expect(result.message).to.be.deep.equal(productId1);
   });
 });
