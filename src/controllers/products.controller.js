@@ -11,7 +11,7 @@ const findById = async (req, res) => {
   const { id } = req.params;
   const productId = Number(id);
   const { type, message } = await productsService.findById(productId);
-  if (type) return res.status(mapStatusError(type)).json(message); // erro na resposta message apenas no teste, deve ser assincronicidade, mas não sei porque (passa no ThunderClient)
+  if (type) return res.status(mapStatusError(type)).json({ message });
   return res.status(sucessStatus).json(message);
 };
 
