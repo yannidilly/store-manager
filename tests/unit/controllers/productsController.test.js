@@ -18,10 +18,8 @@ describe('Realiza testes nas funções do produto da camada controller', () => {
   it('Testa se função findAll retorna lista com todos os produtos', async () => {
     const req = {};
     const res = {};
-
     res.status = sinon.stub().returns(res);
     res.json = sinon.stub().returns();
-
     sinon.stub(productService, 'findAll').resolves(serviceResponse.findAll);
 
     await productController.findAll(req, res);
@@ -30,6 +28,30 @@ describe('Realiza testes nas funções do produto da camada controller', () => {
   });
 
   it('Testa se a função findById retorna o objeto com as informações do produto com o id passado', async () => {
- 
+    const req = {
+      params: { id: '1' },
+    };
+    const res = {};
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productService, 'findById').resolves(serviceResponse.findById.sucess);
+
+    await productController.findById(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+    expect(res.json).to.have.been.calledWith(productId1);
+  });
+
+  it('Testa se a função findById retorna um erro caso o id passado esteja incorreto', async () => {
+    const req = {
+      params: { id: '99' },
+    };
+    const res = {};
+    res.status = sinon.stub().returns(res);
+    res.json = sinon.stub().returns();
+    sinon.stub(productService, 'findById').resolves(serviceResponse.findById.productNotFound);
+
+    await productController.findById(req, res);
+    expect(res.status).to.have.been.calledWith(404);
+    expect(res.json).to.have.been.calledWith({ message: serviceResponse.findById.productNotFound.message });
   });
 });
