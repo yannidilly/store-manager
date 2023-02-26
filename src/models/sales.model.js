@@ -4,10 +4,11 @@ const newSale = async (productsSale) => {
   const arrayProductData = productsSale.map((product) => (Object.values(product).join(', ')));
   const stringProductData = arrayProductData.map((productData) => `(${productData})`).join(', ');
 
-  const [sale] = await connection.execute(
-    `INSERT INTO StoreManager.sales (productId, quantity) VALUES ${stringProductData}`,
+  const [productSale] = await connection.execute(
+    `INSERT INTO StoreManager.sales_products (productId, quantity) VALUES ${stringProductData};
+    INSERT INTO StoreManager.sales (date) VALUE (NOW());`,
   );
-  return sale;
+  return productSale;
 };
 
 module.exports = {
