@@ -17,9 +17,9 @@ const findById = async (id) => {
   return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 };
 
-const createProduct = async (newProduct) => {
-  const newProductCreated = await productsModel.createProduct(newProduct);
-  return { type: null, message: newProductCreated };
+const createProduct = async ({ name }) => {
+  const newProduct = await productsModel.createProduct({ name });
+  return { type: null, message: newProduct };
 };
 
 module.exports = {
