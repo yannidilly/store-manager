@@ -6,6 +6,14 @@ const findAll = async (_req, res) => {
   return res.status(sucessStatus.sucess).json(message);
 };
 
+const findById = async (req, res) => {
+  const { id } = req.params;
+  const numberId = Number(id);
+  const { type, message } = await salesService.findById(numberId);
+  if (type) return res.status(mapStatusError(type)).json({ message });
+  return res.status(sucessStatus.sucess).json(message);
+};
+
 const newSale = async (req, res) => {
   const salesProducts = req.body;
   const { type, message } = await salesService.newSale(salesProducts);
@@ -15,5 +23,6 @@ const newSale = async (req, res) => {
 
 module.exports = {
   findAll,
+  findById,
   newSale,
 };
