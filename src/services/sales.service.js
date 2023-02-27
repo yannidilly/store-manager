@@ -2,7 +2,7 @@ const saleModel = require('../models/sales.model');
 const validate = require('./validation/inputValidations');
 
 const allSales = async () => {
-  const sales = saleModel.allSales();
+  const sales = await saleModel.allSales();
   return { type: null, message: sales };
 };
 
