@@ -1,5 +1,5 @@
 const { idSchema, newProductSchema, newSaleSchema } = require('./schemas');
-const productService = require('../products.service');
+const productsModel = require('../../models/products.model');
 
 const validateProductId = (id) => {
   const { error } = idSchema.validate(id);
@@ -17,8 +17,8 @@ const validateNewProduct = (newProduct) => {
 const verificateProductIdExist = async (allProducts) => {
   const allProductsId = allProducts.map((product) => product.productId);
   const allProductsIdExist = await allProductsId.every(async (id) => {
-    const searchResult = await productService.findById(id);
-    if (searchResult.type) return false;
+  const product = await productsModel.findById(id);
+    if (product[0]) return false;
     return true;
   });
   return allProductsIdExist;
