@@ -1,4 +1,5 @@
 const { idSchema, newProductSchema, newSaleSchema } = require('./schemas');
+const productService = require('../products.service');
 
 const validateProductId = (id) => {
   const { error } = idSchema.validate(id);
@@ -11,6 +12,16 @@ const validateNewProduct = (newProduct) => {
   if (!error) return { type: null, message: '' };
   if (!newProduct.name) return { type: 'NAME_IS_REQUIRED', message: '"name" is required' };
   return { type: 'NAME_LENGTH_ERROR', message: '"name" length must be at least 5 characters long' };
+};
+
+const verificateProductIdExist = async (allProducts) => {
+  const allProductsId = allProducts.map((product) => product.productId);
+  const allProductsIdExist = await allProductsId.every(async (id) => {
+    const searchResult = await productService.findById(id);
+    if (searchResult.type) return false;
+    return true;
+  });
+  return allProductsIdExist;
 };
 
 const validateNewSale = (newSale) => {
@@ -34,4 +45,5 @@ module.exports = {
   validateProductId,
   validateNewProduct,
   validateNewSale,
+  verificateProductIdExist,
 };
