@@ -7,7 +7,7 @@ const newSale = async (salesProducts) => {
   const allProductsIdExist = await validate.verificateProductIdExist(salesProducts);
   if (!allProductsIdExist) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
   const sale = await saleModel.newSale(salesProducts);
-  return sale;
+  return { type: null, message: sale };
 };
 
 module.exports = {
