@@ -1,6 +1,11 @@
 const saleModel = require('../models/sales.model');
 const validate = require('./validation/inputValidations');
 
+const allSales = async () => {
+  const sales = saleModel.allSales();
+  return { type: null, message: sales };
+};
+
 const newSale = async (salesProducts) => {
   const error = validate.validateNewSale(salesProducts);
   if (error.type) return error;
@@ -11,5 +16,6 @@ const newSale = async (salesProducts) => {
 };
 
 module.exports = {
+  allSales,
   newSale,
 };
