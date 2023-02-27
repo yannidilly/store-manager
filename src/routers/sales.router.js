@@ -3,7 +3,7 @@ const salesController = require('../controllers/sales.controller');
 
 const router = express.Router();
 
-router.get('/', salesController.allSales);
+router.get('/', salesController.findAll);
 
 router.post('/', salesController.newSale);
 

@@ -1,8 +1,8 @@
 const saleModel = require('../models/sales.model');
 const validate = require('./validation/inputValidations');
 
-const allSales = async () => {
-  const sales = await saleModel.allSales();
+const findAll = async () => {
+  const sales = await saleModel.findAll();
   return { type: null, message: sales };
 };
 
@@ -16,6 +16,6 @@ const newSale = async (salesProducts) => {
 };
 
 module.exports = {
-  allSales,
+  findAll,
   newSale,
 };
