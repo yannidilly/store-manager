@@ -6,6 +6,13 @@ const findAll = async () => {
   return { type: null, message: sales };
 };
 
+const findById = async (id) => {
+  const error = validate.validateProductId(id);
+  if (error.type) return error;
+  const sale = await saleModel.findById(id);
+  return { type: null, message: sale };
+};
+
 const newSale = async (salesProducts) => {
   const error = validate.validateNewSale(salesProducts);
   if (error.type) return error;
@@ -17,5 +24,6 @@ const newSale = async (salesProducts) => {
 
 module.exports = {
   findAll,
+  findById,
   newSale,
 };
