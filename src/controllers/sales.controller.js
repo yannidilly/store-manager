@@ -1,6 +1,11 @@
 const salesService = require('../services/sales.service');
 const { sucessStatus, mapStatusError } = require('../utils/mapStatus');
 
+const allSales = async (_req, res) => {
+  const { message } = await salesService.allSales();
+  return res.status(sucessStatus.sucess).json(message);
+};
+
 const newSale = async (req, res) => {
   const salesProducts = req.body;
   const { type, message } = await salesService.newSale(salesProducts);
@@ -9,5 +14,6 @@ const newSale = async (req, res) => {
 };
 
 module.exports = {
+  allSales,
   newSale,
 };
