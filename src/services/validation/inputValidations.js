@@ -15,16 +15,9 @@ const validateNewProduct = (newProduct) => {
 };
 
 const verificateProductIdExist = async (allProducts) => {
-  const allProductsId = allProducts.map((product) => product.productId);
-  const allProductsIdExist = await allProductsId.every(async (id) => {
-    const product = await productsModel.findById(id);
-    console.log('product: ', product);
-    console.log('product length: ', product.length);
-    console.log(product.length !== 0);
-    return product.length !== 0;
-  });
-  console.log('response: ', allProductsIdExist);
-  return allProductsIdExist; // o erro está no fato de que ele retorna antes da HOF estar completa
+  const existentProducts = await Promise
+      .all(allProducts.map((product) => productsModel.findById(product.productId)));
+  return existentProducts.every((product) => product[0]);
 };
 
 const validateNewSale = (newSale) => {
