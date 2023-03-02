@@ -4,7 +4,7 @@ const sinon = require("sinon");
 const productsModel = require("../../../src/models/products.model");
 const productsServices = require('../../../src/services/products.service');
 
-const { allProducts, productId1 } = require('../mocks/products');
+const { allProducts, productId1, newProduct } = require('../mocks/products');
 
 describe('Realiza testes nas funções do produto da camada service', () => {
 
@@ -49,12 +49,36 @@ describe('Realiza testes nas funções do produto da camada service', () => {
     expect(result.message).to.be.deep.equal('"id" must to be a number');
   });
 
-  it('Testa se a função findById retorna um erro quando o não existe produto com aquele id', async () => {
+  it('Testa se a função findById retorna um erro quando não existe produto com aquele id', async () => {
     sinon.stub(productsModel, 'findById').resolves([]);
 
     const result = await productsServices.findById(99);
 
     expect(result.type).to.be.deep.equal('PRODUCT_NOT_FOUND');
     expect(result.message).to.be.deep.equal('Product not found');
+  });
+
+  it('Testa se a função createProduct retorna o objeto com as informações do produto criado', async () => {
+    sinon.stub(productsModel, 'createProduct').resolves(newProduct);
+
+    const result = await productsServices.createProduct({ name: 'Novo produto' });
+    expect(result.type).to.be.deep.equal(null);
+    expect(result.message).to.be.deep.equal(newProduct);
+  })
+
+  it('Testa se a função createProduct retorna um erro se o nome do produto não for passado', async () => {
+    sinon.stub(productsModel, 'createProduct').resolves(newProduct);
+
+    const result = await productsServices.createProduct({ id: 1 });
+    expect(result.type).to.be.deep.equal('NAME_IS_REQUIRED');
+    expect(result.message).to.be.deep.equal('"name" is required');
+  })
+
+  it('Testa se a função createProduct retorna um erro se o nome do produto não tiver a quantidade mínima de caracteres', async () => {
+    sinon.stub(productsModel, 'createProduct').resolves(newProduct);
+
+    const result = await productsServices.createProduct({ name: 'No' });
+    expect(result.type).to.be.deep.equal('NAME_LENGTH_ERROR');
+    expect(result.message).to.be.deep.equal('"name" length must be at least 5 characters long');
   });
 });
