@@ -24,8 +24,18 @@ const createProduct = async ({ name }) => {
   return { type: null, message: newProduct };
 };
 
+const editProduct = async (id, { name }) => {
+  const realId = await validate.verificateProductIdExist([{ productId: id }]);
+  if (!realId) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+  const error = validate.validateNewProduct({ name });
+  if (error.type) return error;
+  const editedProduct = await productsModel.editProduct(id, { name });
+  return { type: null, message: editedProduct };
+};
+
 module.exports = {
   findAll,
   findById,
   createProduct,
+  editProduct,
 };
