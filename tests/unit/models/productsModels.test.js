@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const connection = require('../../../src/models/connection');
 const productsModel = require('../../../src/models/products.model');
 
-const { allProducts, productId1 } = require('../mocks/products');
+const { allProducts, productId1, newProduct } = require('../mocks/products');
 
 describe('Realiza testes nas funções do produto da camada model', () => {
 
@@ -26,5 +26,19 @@ describe('Realiza testes nas funções do produto da camada model', () => {
     const result = await productsModel.findById(1);
     expect(result).to.be.deep.equal(productId1);
 
+  });
+
+  it('Testa se a função createProduct retorna um objeto com as informações do produto passado', async () => {
+    sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+
+    const result = await productsModel.createProduct({ name: 'Novo produto' });
+    expect(result).to.be.deep.equal(newProduct);
+  });
+
+  it('Testa se a função editProduct retorna um objeto com as informações do produto passado', async () => {
+    sinon.stub(connection, 'execute').resolves([productId1]);
+
+    const result = await productsModel.editProduct(1, { name: 'Martelo de Thor' });
+    expect(result).to.be.deep.equal(productId1);
   });
 });
